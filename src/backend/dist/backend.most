@@ -1,0 +1,219 @@
+// Version: 3.0.0
+type ChapterId__1031416948 = ChapterId__202794786;
+type ChapterId__202794786 = Nat;
+type ChapterId__30154255 = ChapterId__202794786;
+type ChapterId__365325148 = ChapterId__202794786;
+type Chapter__381490941 = Chapter__885082410;
+type Chapter__885082410 =
+  {
+    chapterNumber : Nat;
+    content : Text;
+    createdAt : Timestamp__935868736;
+    id : ChapterId__1031416948;
+    novelId : NovelId__75398870;
+    title : Text
+  };
+type CollabSession__44417878 =
+  {
+    var activeEditors : [UserId__445209843];
+    chapterId : ChapterId__30154255;
+    var lastContent : Text;
+    var lastUpdated : Timestamp__206932737;
+    novelId : NovelId__1055971432
+  };
+type CollabSession__953792759 = CollabSession__44417878;
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type FriendRequestStatus__746288382 = {#accepted; #declined; #pending};
+type FriendRequest__318119840 = FriendRequest__496069773;
+type FriendRequest__496069773 =
+  {
+    createdAt : Timestamp__605112597;
+    from : UserId__134176548;
+    status : FriendRequestStatus__746288382;
+    to : UserId__134176548
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type NovelId__1055971432 = NovelId__205835211;
+type NovelId__107766108 = NovelId__205835211;
+type NovelId__205835211 = Nat;
+type NovelId__75398870 = NovelId__205835211;
+type Novel__1007105313 = Novel__249430114;
+type Novel__249430114 =
+  {
+    authorName : Text;
+    authorPrincipal : UserId__631752420;
+    var coAuthors : [UserId__631752420];
+    coverImage : Text;
+    createdAt : Timestamp__935868736;
+    description : Text;
+    genre : Text;
+    id : NovelId__75398870;
+    var ratingCount : Nat;
+    var ratingSum : Nat;
+    tags : [Text];
+    title : Text;
+    var totalReads : Nat
+  };
+type OldNovelId__458949543 = Nat;
+type OldNovel__513737027 =
+  {
+    authorName : Text;
+    authorPrincipal : OldUserId__580276348;
+    coverImage : Text;
+    createdAt : OldTimestamp__27916213;
+    description : Text;
+    genre : Text;
+    id : OldNovelId__458949543;
+    var ratingCount : Nat;
+    var ratingSum : Nat;
+    tags : [Text];
+    title : Text;
+    var totalReads : Nat
+  };
+type OldTimestamp__27916213 = Int;
+type OldUserId__580276348 = Principal;
+type OldUserProfile__416069324 =
+  {
+    var avatarUrl : Text;
+    var bio : Text;
+    var chaptersRead : Nat;
+    var createdAt : OldTimestamp__27916213;
+    id : OldUserId__580276348;
+    var novelsRead : Nat;
+    var username : Text
+  };
+type ReadingProgress__105332301 =
+  {
+    var lastChapterId : ChapterId__365325148;
+    var lastChapterNumber : Nat;
+    novelId : NovelId__107766108;
+    var percentComplete : Float;
+    var updatedAt : Timestamp__7138886;
+    userId : UserId__1023114477
+  };
+type ReadingProgress__742858941 = ReadingProgress__105332301;
+type SampleChapter__730404490 = {content : Text; num : Nat; title : Text};
+type SampleNovel__176242874 =
+  {
+    author : Text;
+    cover : Text;
+    description : Text;
+    genre : Text;
+    ratingCount : Nat;
+    ratingSum : Nat;
+    reads : Nat;
+    tags : [Text];
+    title : Text
+  };
+type Timestamp__206932737 = Timestamp__301639476;
+type Timestamp__301639476 = Int;
+type Timestamp__605112597 = Timestamp__301639476;
+type Timestamp__7138886 = Timestamp__301639476;
+type Timestamp__935868736 = Timestamp__301639476;
+type UserId__1023114477 = UserId__158757552;
+type UserId__134176548 = UserId__158757552;
+type UserId__158757552 = Principal;
+type UserId__315772724 = UserId__158757552;
+type UserId__445209843 = UserId__158757552;
+type UserId__631752420 = UserId__158757552;
+type UserProfile__1009003526 =
+  {
+    var avatarUrl : Text;
+    var bio : Text;
+    var chaptersRead : Nat;
+    var createdAt : Timestamp__301639476;
+    id : UserId__315772724;
+    var isAuthor : Bool;
+    var novelsRead : Nat;
+    var username : Text
+  };
+type UserProfile__852299788 = UserProfile__1009003526;
+actor ({
+  stable chapterSets : [[SampleChapter__730404490]];
+  stable chapters :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Chapter__381490941]];
+      var elementIndex : Nat__490723111
+    };
+  stable collabSessions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?CollabSession__953792759]];
+      var elementIndex : Nat__490723111
+    };
+  stable friendRequests :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?FriendRequest__318119840]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextChapterId : {var value : Nat};
+  stable nextNovelId : {var value : Nat};
+  in novels : List__415060402<OldNovel__513737027>;
+  stable progressMap :
+    {
+      var root : Node__46230540<Text, ReadingProgress__742858941>;
+      var size : Nat__490723111
+    };
+  stable sampleNovels : [SampleNovel__176242874];
+  stable seedAuthorPrincipal : Principal;
+  stable var seedIdx : Nat;
+  in users : List__415060402<OldUserProfile__416069324>
+}, {
+  stable chapterSets : [[SampleChapter__730404490]];
+  stable chapters :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Chapter__381490941]];
+      var elementIndex : Nat__490723111
+    };
+  stable collabSessions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?CollabSession__953792759]];
+      var elementIndex : Nat__490723111
+    };
+  stable friendRequests :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?FriendRequest__318119840]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextChapterId : {var value : Nat};
+  stable nextNovelId : {var value : Nat};
+  stable novels :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Novel__1007105313]];
+      var elementIndex : Nat__490723111
+    };
+  stable progressMap :
+    {
+      var root : Node__46230540<Text, ReadingProgress__742858941>;
+      var size : Nat__490723111
+    };
+  stable sampleNovels : [SampleNovel__176242874];
+  stable seedAuthorPrincipal : Principal;
+  stable var seedIdx : Nat;
+  stable users :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?UserProfile__852299788]];
+      var elementIndex : Nat__490723111
+    }
+});

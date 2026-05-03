@@ -1,0 +1,128 @@
+type UserProfilePublic = 
+ record {
+   avatarUrl: text;
+   bio: text;
+   chaptersRead: nat;
+   createdAt: Timestamp;
+   id: UserId;
+   isAuthor: bool;
+   novelsRead: nat;
+   username: text;
+ };
+type UserId = principal;
+type Timestamp = int;
+type SaveProgressRequest = 
+ record {
+   lastChapterId: ChapterId;
+   lastChapterNumber: nat;
+   novelId: NovelId;
+   percentComplete: float64;
+ };
+type SaveDraftResult = 
+ variant {
+   err: text;
+   ok;
+ };
+type ReadingProgressPublic = 
+ record {
+   lastChapterId: ChapterId;
+   lastChapterNumber: nat;
+   novelId: NovelId;
+   percentComplete: float64;
+   updatedAt: Timestamp;
+   userId: UserId;
+ };
+type RatingRequest = 
+ record {
+   novelId: NovelId;
+   rating: nat;
+ };
+type NovelPublic = 
+ record {
+   authorName: text;
+   authorPrincipal: UserId;
+   avgRating: float64;
+   coAuthors: vec UserId;
+   coverImage: text;
+   createdAt: Timestamp;
+   description: text;
+   genre: text;
+   id: NovelId;
+   ratingCount: nat;
+   tags: vec text;
+   title: text;
+   totalReads: nat;
+ };
+type NovelId = nat;
+type CreateNovelRequest = 
+ record {
+   coverImage: text;
+   description: text;
+   genre: text;
+   tags: vec text;
+   title: text;
+ };
+type CreateChapterRequest = 
+ record {
+   chapterNumber: nat;
+   content: text;
+   novelId: NovelId;
+   title: text;
+ };
+type CollabSessionPublic = 
+ record {
+   activeEditors: vec UserId;
+   chapterId: ChapterId;
+   lastContent: text;
+   lastUpdated: Timestamp;
+   novelId: NovelId;
+ };
+type ChapterId = nat;
+type Chapter = 
+ record {
+   chapterNumber: nat;
+   content: text;
+   createdAt: Timestamp;
+   id: ChapterId;
+   novelId: NovelId;
+   title: text;
+ };
+service : {
+  acceptFriendRequest: (from: UserId) -> (bool);
+  addChapter: (req: CreateChapterRequest) -> (nat);
+  addCoAuthor: (novelId: NovelId, coAuthor: principal) -> (bool);
+  becomeAuthor: () -> (bool);
+  createNovel: (req: CreateNovelRequest, authorName: text) -> (nat);
+  createProfile: (username: text, bio: text, avatarUrl: text) -> (bool);
+  declineFriendRequest: (from: UserId) -> (bool);
+  filterByGenre: (genre: text) -> (vec NovelPublic) query;
+  getActiveSessions: (novelId: NovelId) -> (vec CollabSessionPublic) query;
+  getAllNovels: () -> (vec NovelPublic) query;
+  getChapter: (chapterId: ChapterId) -> (opt Chapter) query;
+  getChapterDraft: (chapterId: ChapterId) -> (opt CollabSessionPublic) query;
+  getFriends: () -> (vec UserId) query;
+  getMyProfile: () -> (opt UserProfilePublic) query;
+  getNovel: (novelId: NovelId) -> (opt NovelPublic) query;
+  getNovelChapters: (novelId: NovelId) -> (vec Chapter) query;
+  getPendingRequests: () -> (vec UserId) query;
+  getProfile: (userId: UserId) -> (opt UserProfilePublic) query;
+  getProgress: (novelId: NovelId) -> (opt ReadingProgressPublic) query;
+  getReadingHistory: () -> (vec ReadingProgressPublic) query;
+  getTopNovels: () -> (vec NovelPublic) query;
+  incrementReadCount: (chapterId: ChapterId) -> ();
+  joinCollabSession: (chapterId: ChapterId, novelId: NovelId) -> ();
+  leaveCollabSession: (chapterId: ChapterId) -> ();
+  publishChapter: (chapterId: ChapterId) -> (SaveDraftResult);
+  rateNovel: (req: RatingRequest) -> (bool);
+  removeCoAuthor: (novelId: NovelId, coAuthor: principal) -> (bool);
+  removeFriend: (friendId: UserId) -> (bool);
+  saveChapterDraft: (chapterId: ChapterId, content: text) ->
+   (SaveDraftResult);
+  saveProgress: (req: SaveProgressRequest) -> (bool);
+  searchNovels: (term: text) -> (vec NovelPublic) query;
+  searchUsers: (term: text) -> (vec UserProfilePublic) query;
+  sendFriendRequest: (to: UserId) -> (bool);
+  updateChapter: (chapterId: ChapterId, title: text, content: text) -> (bool);
+  updateNovel: (novelId: NovelId, req: CreateNovelRequest) -> (bool);
+  updateProfile: (username: text, bio: text, avatarUrl: text) -> (bool);
+}

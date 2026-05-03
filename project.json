@@ -1,0 +1,29 @@
+{
+  "overview": "NovelHub is an online novel reading and writing platform where users can read novels, track their progress, follow friends, and — as authors — create and collaboratively write novels with real-time co-editing.",
+  "features": [
+    "Author login and role system via Internet Identity",
+    "Author dashboard to create, edit, and delete novels",
+    "Cover image upload with preview",
+    "Chapter creation and editing with rich text editor",
+    "Real-time collaborative writing with polling-based live sync",
+    "Active co-author presence display in editor",
+    "Co-author management with add/remove from novels",
+    "Novel library with search, filter, and genre browsing",
+    "Top 5 ranked novels by reads and ratings",
+    "Friends system and reading activity feed",
+    "Reading progress tracking per novel",
+    "Dark/light theme toggle"
+  ],
+  "category": "entertainment",
+  "tags": [
+    "novels",
+    "reading",
+    "writing",
+    "collaboration",
+    "authors",
+    "fiction",
+    "library",
+    "social"
+  ],
+  "last_updated": "2026-05-03T14:19:58.511Z"
+}
